@@ -1,0 +1,277 @@
+/* ============================================================
+   1. VARIÁVEIS E DESIGN SYSTEM (UNIFICADO)
+   ============================================================ */
+:root {
+    /* Paleta Enterprise E-SESMT */
+    --color-primary: #1f3824;
+    --color-secondary: #2f5233;
+    --color-accent: #7ed957;
+    --color-light: #f5f5f5;
+    --color-white: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-light: #555;
+    --color-border: #eef2ee;
+    
+    /* Efeitos e Transições */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+    --service-gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, #3d6b41 100%);
+}
+
+/* ============================================================
+   2. RESET E ESTRUTURA BASE
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-size: 16px;
+    color: var(--color-text);
+    background-color: var(--color-white); /* Fundo sempre claro para respiro */
+    line-height: 1.6;
+    transition: var(--transition-smooth);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================================================
+   3. HEADER (ADAPTATIVO)
+   ============================================================ */
+.header {
+    background: var(--color-white); /* Header branco no mobile para leveza */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 15px 0;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 800; 
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* No Desktop o Header pode ser escuro/gradiente se preferir, ou manter branco */
+@media (min-width: 768px) {
+    .header { background: var(--service-gradient); padding: 20px 0; }
+    .logo { color: var(--color-accent); }
+}
+
+/* ============================================================
+   4. HERO (OTIMIZADO MOBILE)
+   ============================================================ */
+.hero {
+    background: var(--service-gradient);
+    padding: 60px 20px 80px;
+    text-align: center;
+    color: white;
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 0% 100%);
+}
+
+.hero__title {
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto 25px;
+}
+
+.btn-cta {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-primary);
+    padding: 16px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 800;
+    box-shadow: 0 4px 15px rgba(126, 217, 87, 0.4);
+    transition: var(--transition-smooth);
+}
+
+/* ============================================================
+   5. CARDS DE SERVIÇOS (CLEAN DESIGN)
+   ============================================================ */
+.servicos-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.servico-card {
+    background: var(--color-white);
+    padding: 30px 20px;
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.servico-card.active {
+    border-color: var(--color-accent);
+    background: #f8fbf8; /* Leve destaque verde no fundo */
+}
+
+.servico-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.detalhes-servico {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+    text-align: left;
+    width: 100%;
+}
+
+.servico-card.active .detalhes-servico {
+    max-height: 500px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.btn-saiba-mais {
+    margin-top: 20px;
+    color: var(--color-primary);
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    border: 2px solid var(--color-accent);
+    padding: 8px 20px;
+    border-radius: 25px;
+    transition: var(--transition-smooth);
+}
+
+.servico-card.active .btn-saiba-mais {
+    background: var(--color-accent);
+}
+
+/* ============================================================
+   6. GRID PRINCIPAL E FORMULÁRIOS
+   ============================================================ */
+.main-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 0;
+}
+
+.form-container {
+    background: var(--color-white);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 25px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: #f0f0f0;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: var(--color-accent);
+    color: var(--color-primary);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+/* ============================================================
+   7. WHATSAPP E UTILITÁRIOS
+   ============================================================ */
+.btn-whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25d366;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1001;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+/* ============================================================
+   8. MEDIA QUERIES (DESKTOP)
+   ============================================================ */
+@media (min-width: 768px) {
+    .servicos-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .main-grid {
+        flex-direction: row;
+        display: grid;
+        grid-template-columns: 1fr 1.6fr;
+        gap: 40px;
+    }
+
+    .servico-card {
+        min-height: 350px;
+    }
+}
