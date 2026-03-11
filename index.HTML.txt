@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consultoria em SST, eSocial, PGR e LTCAT com Eng. Edmar Santos.">
+    <title>E-SESMT | Engenharia e Segurança do Trabalho</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #7ed957;
+            --primary-dark: #1f3824;
+            --accent: #2ecc71;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
+
+        /* HEADER E LOGO */
+        .header { background: var(--white); padding: 1rem 0; box-shadow: 0 4px 15px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; }
+        .header__container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.6rem; color: var(--primary-dark); text-decoration: none; }
+
+        /* HERO COM ANIMAÇÃO */
+        .hero { 
+            background: linear-gradient(135deg, #1f3824 0%, #3a6332 100%); 
+            color: var(--white); 
+            padding: 100px 0; 
+            text-align: center; 
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; animation: slideUp 0.8s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* SEÇÃO DE NÚMEROS */
+        .stats { background: var(--white); padding: 50px 0; margin-top: -50px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; color: var(--primary); margin: 0; }
+        .stat-item p { font-weight: 600; color: var(--primary-dark); margin-top: 5px; }
+
+        /* CARDS DE SERVIÇOS INTERATIVOS */
+        .servicos { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.2rem; color: var(--primary-dark); margin-bottom: 50px; }
+        .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .servico-card { 
+            background: var(--white); 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            transition: var(--transition);
+            text-align: center; 
+            border-bottom: 5px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 380px;
+        }
+
+        .servico-card:hover { transform: translateY(-10px); border-bottom-color: var(--primary); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .servico-card .icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .servico-card h4 { margin: 10px 0; font-size: 1.4rem; color: var(--primary-dark); }
+
+        /* Detalhes Ocultos */
+        .detalhes-servico {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 15px;
+            text-align: left;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            width: 100%;
+        }
+
+        .detalhes-servico ul { padding-left: 20px; margin: 0; }
+        .detalhes-servico li { margin-bottom: 8px; }
+
+        .servico-card.active .detalhes-servico {
+            max-height: 500px; /* Expande para mostrar o conteúdo */
+        }
+
+        .btn-saiba-mais {
+            margin-top: auto;
+            color: var(--primary-dark);
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 2px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .servico-card.active .btn-saiba-mais {
+            background: var(--primary);
+            color: var(--primary-dark);
+        }
+
+        /* FORMULÁRIO E CONTATO */
+        .main-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .form-container { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .tabs { display: flex; gap: 10px; margin-bottom: 30px; }
+        .tab-btn { flex: 1; padding: 15px; border: none; background: #eee; cursor: pointer; font-weight: 700; border-radius: 10px; transition: 0.3s; }
+        .tab-btn.active { background: var(--primary); color: var(--primary-dark); }
+
+        /* WHATSAPP FLOAT */
+        .btn-whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white;
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 1000; text-decoration: none; font-size: 30px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+        /* FOOTER */
+        .footer { background: var(--primary-dark); color: white; padding: 60px 0 20px; text-align: center; }
+
+        @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header__container">
+            <a href="#" class="logo">
+                <svg width="40" height="40" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#7ed957" opacity="0.2"/><path d="M50 20 L70 35 L70 70 Q70 80 60 85 L40 85 Q30 80 30 70 L30 35 Z" fill="#7ed957" stroke="#1f3824" stroke-width="2"/></svg>
+                E-SESMT
+            </a>
+            <nav>
+                <a href="#servicos" style="text-decoration:none; color:var(--text-dark); font-weight:700; margin-right:20px">Serviços</a>
+                <a href="#contato" style="background:var(--primary); padding:10px 20px; border-radius:8px; text-decoration:none; color:var(--primary-dark); font-weight:800">Agendar</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container" style="max-width:800px; margin:0 auto; padding:0 20px;">
+            <h1>Sua empresa em conformidade, seus trabalhadores seguros.</h1>
+            <p style="font-size:1.2rem; opacity:0.9">Consultoria técnica especializada em eSocial, PGR e Laudos de Engenharia com foco em evitar multas e acidentes.</p>
+            <br>
+            <a href="#contato" style="display:inline-block; background:var(--primary); color:var(--primary-dark); padding:18px 40px; border-radius:50px; text-decoration:none; font-weight:800; font-size:1.1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">QUERO UMA CONSULTORIA AGORA</a>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid" style="max-width:1200px; margin:0 auto;">
+            <div class="stat-item">
+                <h3>+15</h3>
+                <p>Anos de Experiência</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Conformidade eSocial</p>
+            </div>
+            <div class="stat-item">
+                <h3>+500</h3>
+                <p>Empresas Atendidas</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="servicos">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <h2 class="section-title">Soluções que sua Empresa Precisa</h2>
+            <div class="servicos-grid">
+                
+                <div class="servico-card" onclick="toggleCard(this)">
+                    <span class="icon">📋</span>
+                    <h4>PGR & Gerenciamento</h4>
+                    <p>Identificamos riscos antes que eles virem problemas. Documentação completa NR-01.</p>
+                    <div class="detalhes-servico">
+                        <ul>
+                            <li>Inventário de Riscos Ocupacionais detalhado.</li>
+                            <li>Plano de Ação com metas e cronogramas.</li>
+                            <li>Avaliação de riscos químicos e biológicos.</li>
+                            <li>Proteção jurídica contra fiscalizações.</li>
+                        </ul>
+                    </div>
+                    <span class="btn-saiba-mais">Ver detalhes</span>
+                </div>
+
+                <div class="servico-card" onclick="toggleCard(this)">
+                    <span class="icon">💻</span>
+                    <h4>eSocial SST</h4>
+                    <p>Envio rápido e sem erros dos eventos S-2210, S-2220 e S-2240.</p>
+                    <div class="detalhes-servico">
+                        <ul>
+                            <li><strong>S-2210:</strong> Abertura de CAT imediata.</li>
+                            <li><strong>S-2220:</strong> Gestão de ASOs e exames.</li>
+                            <li><strong>S-2240:</strong> Laudo de agentes nocivos.</li>
+                            <li>Software integrado para envio automático.</li>
+                        </ul>
+                    </div>
+                    <span class="btn-saiba-mais">Ver detalhes</span>
+                </div>
+
+                <div class="servico-card" onclick="toggleCard(this)">
+                    <span class="icon">🏗️</span>
+                    <h4>Treinamentos</h4>
+                    <p>NR-10, NR-35 e NR-18 com certificação técnica reconhecida.</p>
+                    <div class="detalhes-servico">
+                        <ul>
+                            <li>Treinamentos práticos e teóricos.</li>
+                            <li>Instrutores qualificados e certificados.</li>
+                            <li>Emissão de certificados em conformidade com o MEC.</li>
+                            <li>Foco total na prevenção real de acidentes.</li>
+                        </ul>
+                    </div>
+                    <span class="btn-saiba-mais">Ver detalhes</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <main class="main-grid" id="contato">
+        <aside>
+            <div style="background:var(--primary-dark); color:white; padding:30px; border-radius:20px; position:sticky; top:100px;">
+                <h2 style="color:var(--primary)">Por que nos escolher?</h2>
+                <ul style="list-style:none; padding:0;">
+                    <li style="margin-bottom:15px">✅ Atendimento direto com Engenheiro.</li>
+                    <li style="margin-bottom:15px">✅ Redução real de custos com impostos.</li>
+                    <li style="margin-bottom:15px">✅ Agilidade na entrega de Laudos.</li>
+                    <li style="margin-bottom:15px">✅ Suporte jurídico técnico.</li>
+                </ul>
+                <hr style="opacity:0.2">
+                <p><strong>Fale com Eng. Edmar:</strong><br>(31) 98458-6788</p>
+            </div>
+        </aside>
+
+        <section class="form-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('agendamento')">Agendar Consultoria</button>
+                <button class="tab-btn" onclick="switchTab('contato')">Dúvida Rápida</button>
+            </div>
+
+            <form id="form-contato-main">
+                <div style="margin-bottom:15px">
+                    <label style="display:block; font-weight:700; margin-bottom:5px;">Qual sua principal urgência?</label>
+                    <select id="urgencia" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;">
+                        <option>Evitar multas do eSocial</option>
+                        <option>Elaborar PGR / LTCAT</option>
+                        <option>Treinar equipe (NRs)</option>
+                        <option>Outros serviços</option>
+                    </select>
+                </div>
+                <div style="margin-bottom:15px">
+                    <label style="display:block; font-weight:700; margin-bottom:5px;">Seu Nome / Empresa</label>
+                    <input type="text" id="nome" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd;" placeholder="Ex: Empresa ABC" required>
+                </div>
+                <div id="data-container">
+                    <label style="display:block; font-weight:700; margin-bottom:5px;">Data Preferencial</label>
+                    <input type="date" id="data" style="width:100%; padding:12px; border-radius:8px; border:1px solid #ddd; margin-bottom:15px;">
+                </div>
+                <button type="submit" style="width:100%; padding:15px; background:var(--primary); border:none; border-radius:8px; font-weight:800; cursor:pointer;">SOLICITAR ATENDIMENTO</button>
+            </form>
+
+            <div id="feedback" style="margin-top:20px; padding:15px; background:#d4edda; color:#155724; border-radius:8px; text-align:center;" hidden>
+                Solicitação enviada! Redirecionando para o WhatsApp...
+            </div>
+        </section>
+    </main>
+
+    <a href="https://wa.me/5531984586788" class="btn-whatsapp-float" target="_blank">
+        <svg viewBox="0 0 32 32" style="width:35px; fill:white; margin-top:12px; margin-left:12px;"><path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825.737 5.48 2.025 7.787l-2.025 7.387 7.563-1.988c2.275 1.187 4.85 1.863 7.588 1.863 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.337c-2.437 0-4.713-.625-6.7-1.713l-.475-.262-4.487 1.175 1.2-4.375-.287-.462c-1.187-1.925-1.887-4.2-1.887-6.65 0-7.163 5.825-13 13-13s13 5.838 13 13-5.838 13-13 13zM22.513 18.912c-.35-.175-2.087-1.025-2.413-1.138s-.562-.175-.8.175-.925 1.138-1.138 1.375-.425.262-.775.087c-.35-.175-1.475-.538-2.813-1.725-1.037-.925-1.738-2.063-1.938-2.413s-.025-.538.15-.713c.15-.15.35-.4.525-.6s.225-.338.35-.562.062-.425-.025-.6-.8-1.925-1.1-2.65c-.287-.713-.587-.613-.8-.613s-.425-.013-.65-.013-.587.087-.9.425-1.2 1.175-1.2 2.863.313 3.325.35 3.375c.038.05 2.425 3.7 5.875 5.188 3.45 1.488 3.45.988 4.075.925s2.087-.85 2.375-1.675c.287-.825.287-1.538.2-1.675s-.3-.25-.65-.425z"/></svg>
+    </a>
+
+    <footer class="footer">
+        <p>&copy; 2026 E-SESMT - Engenharia e Segurança do Trabalho.<br>Eng. Edmar Santos - (31) 98458-6788</p>
+    </footer>
+
+    <script>
+        // Função para expandir/recolher os cards de serviços
+        function toggleCard(card) {
+            const isActive = card.classList.contains('active');
+            
+            // Fecha todos os cards antes de abrir o clicado (efeito sanfona)
+            document.querySelectorAll('.servico-card').forEach(c => {
+                c.classList.remove('active');
+                c.querySelector('.btn-saiba-mais').innerText = "Ver detalhes";
+            });
+
+            if (!isActive) {
+                card.classList.add('active');
+                card.querySelector('.btn-saiba-mais').innerText = "Fechar";
+            }
+        }
+
+        // Troca de abas no formulário
+        function switchTab(tab) {
+            const isAgendamento = tab === 'agendamento';
+            const btns = document.querySelectorAll('.tab-btn');
+            btns[0].classList.toggle('active', isAgendamento);
+            btns[1].classList.toggle('active', !isAgendamento);
+            
+            document.getElementById('data-container').style.display = isAgendamento ? 'block' : 'none';
+        }
+
+        // Envio do formulário
+        document.getElementById('form-contato-main').onsubmit = (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const servico = document.getElementById('urgencia').value;
+            const feedback = document.getElementById('feedback');
+            
+            feedback.hidden = false;
+            
+            setTimeout(() => {
+                const msg = `Olá Eng. Edmar, meu nome é ${nome}. Gostaria de tratar sobre: ${servico}.`;
+                window.open(`https://wa.me/5531984586788?text=${encodeURIComponent(msg)}`, "_blank");
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
